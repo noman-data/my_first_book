@@ -1,0 +1,37 @@
+name: Build Book
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install TinyTeX
+        uses: r-lib/actions/setup-tinytex@v2
+
+      - name: Render Book
+        run: quarto render
+
+      - name: Upload PDF Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-pdf
+          path: _book/*.pdf
+
+      - name: Upload EPUB Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-epub
+          path: _book/*.epub
