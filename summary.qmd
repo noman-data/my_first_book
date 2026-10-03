@@ -1,0 +1,25 @@
+# Summary & Financial Case Study {#sec-summary}
+
+This chapter illustrates loading external CSV datasets and formatting publication-ready accounting tables.
+
+## Quarterly Performance Analysis
+
+We load company financials from an external CSV file stored in the project data directory.
+
+```{r}
+#| label: tbl-financials
+#| tbl-cap: "Quarterly Revenue vs Expenses (USD)"
+#| echo: true
+
+# Read the external CSV file
+fin_data <- read.csv("data/financials.csv")
+
+# Compute Net Profit dynamically
+fin_data$Net_Profit <- fin_data$Revenue - 
+  fin_data$Expenses
+
+# Display with knitr::kable
+knitr::kable(fin_data)
+```
+
+As highlighted in @tbl-financials, profitability expanded across all four operating quarters.
