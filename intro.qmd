@@ -1,0 +1,79 @@
+# Introduction {#sec-intro}
+
+This chapter demonstrates dynamic R computation, data exploration, and cross-referencing.
+
+## Exploring Motor Trend Data
+
+We analyze the classic `mtcars` dataset. First, we inspect a styled summary table shown in @tbl-cars.
+
+```{r}
+#| label: tbl-cars
+#| tbl-cap: "Top 5 rows of Motor Trend Car Road Tests"
+#| echo: true
+
+knitr::kable(head(mtcars[, 1:4], 5))
+```
+
+Next, we inspect the relationship between engine displacement and fuel efficiency in @fig-mtcars-plot.
+
+```{r}
+#| label: fig-mtcars-plot
+#| fig-cap: "Displacement vs. Miles Per Gallon (MPG)"
+#| fig-align: "center"
+#| out-width: "85%"
+#| echo: true
+
+plot(
+  mtcars$disp, mtcars$mpg,
+  xlab = "Displacement (cu.in.)",
+  ylab = "Miles Per Gallon (MPG)",
+  pch = 19,
+  col = "steelblue"
+)
+abline(
+  lm(mpg ~ disp, data = mtcars),
+  col = "firebrick",
+  lwd = 2
+)
+```
+
+As demonstrated in @fig-mtcars-plot and @sec-intro, vehicles with larger engine displacement yield lower fuel economy.
+
+## Professional Styling Features
+
+### Callout Boxes
+
+Technical books use callouts to highlight important reader notes:
+
+\Needspace{6\baselineskip}
+::: {.callout-note}
+## Important Note for Readers
+
+The `mtcars` dataset was extracted from the 1974 *Motor Trend* US magazine, comprising fuel consumption and 10 aspects of automobile design.
+:::
+
+\Needspace{6\baselineskip}
+::: {.callout-warning}
+## Common Pitfall
+
+Never evaluate models without checking for missing values (`NA`) or extreme outliers first!
+:::
+
+### Hiding Code but Showing Results
+
+Publishers often want clean graphs without printing the underlying script in the main text:
+
+```{r}
+#| label: fig-hidden-code
+#| fig-cap: "Fuel Efficiency Distribution (Code Hidden)"
+#| fig-align: "center"
+#| echo: false
+
+hist(
+  mtcars$mpg,
+  col = "cornflowerblue",
+  border = "white",
+  main = "",
+  xlab = "Miles Per Gallon (MPG)"
+)
+```

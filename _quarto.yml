@@ -1,0 +1,44 @@
+project:
+  type: book
+
+book:
+  title: "my_first_book"
+  author: "Norah Jones"
+  date: "10/3/2026"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+  pdf:
+    documentclass: scrreprt
+    geometry:
+      - paperwidth=6in
+      - paperheight=9in
+      - top=0.75in
+      - bottom=0.75in
+      - inner=1.0in
+      - outer=0.75in
+    colorlinks: true
+    toc: true
+    number-sections: true
+    include-in-header:
+      text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+        \usepackage{needspace}
+  
+  epub:
+    cover-image: cover.png
+  
+
+editor: visual
+
