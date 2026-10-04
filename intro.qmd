@@ -1,79 +1,71 @@
-# Introduction {#sec-intro}
+# Introduction to data {#sec-intro}
 
-This chapter demonstrates dynamic R computation, data exploration, and cross-referencing.
+Scientists seek to answer questions using rigorous methods and careful observations [@sec-intro]. Data collected from field notes, surveys, and experiments form the backbone of statistical investigations.
 
-## Exploring Motor Trend Data
+## Data basics
 
-We analyze the classic `mtcars` dataset. First, we inspect a styled summary table shown in @tbl-cars.
+Effective organization and description of data is a first step in most analyses.
+
+### Observations, variables, and data matrices
+
+A **data matrix** organizes cases as rows and characteristics as columns.
 
 ```{r}
-#| label: tbl-cars
-#| tbl-cap: "Top 5 rows of Motor Trend Car Road Tests"
-#| echo: true
+#| label: tbl-loans
+#| tbl-cap: "Sample records from a peer-to-peer lending portfolio"
+#| echo: false
 
-knitr::kable(head(mtcars[, 1:4], 5))
+loan_sample <- data.frame(
+  loan_amount = c(22000, 6000, 25000, 15000),
+  interest_rate = c(10.90, 9.92, 26.30, 6.08),
+  term = c(60, 36, 36, 36),
+  grade = c("B", "B", "E", "A"),
+  homeownership = c("rent", "rent", "mortgage", "mortgage")
+)
+
+knitr::kable(loan_sample, booktabs = TRUE)
 ```
 
-Next, we inspect the relationship between engine displacement and fuel efficiency in @fig-mtcars-plot.
+As illustrated in @tbl-loans, each row corresponds to an observational unit.
+
+::: {.callout-note title="DATA MATRIX"}
+Each row of a data matrix corresponds to a unique case (observational unit), and each column corresponds to a variable.
+:::
+
+::: {.callout-tip title="EXAMPLE 1.1: CLASSIFYING VARIABLES"}
+**Example problem:** In the loan sample shown above, classify `loan_amount` and `homeownership` as either numerical or categorical.
+
+**Solution to the example:** `loan_amount` takes numerical dollar values where arithmetic is sensible, so it is numerical. `homeownership` categorizes borrowers into distinct groups (rent or mortgage), making it categorical.
+:::
+
+::: {.callout-warning title="GUIDED PRACTICE 1.2: PROPORTION OF RENTERS"}
+What proportion of the loans shown in @tbl-loans represent borrowers who rent their homes?^[Two out of four loans in the sample represent renters: $2/4 = 0.50$ or $50\%$.]
+:::
+
+## Scatterplots and Associations
+
+Scatterplots provide a case-by-case view of data for two numerical variables.
 
 ```{r}
-#| label: fig-mtcars-plot
-#| fig-cap: "Displacement vs. Miles Per Gallon (MPG)"
-#| fig-align: "center"
-#| out-width: "85%"
-#| echo: true
+#| label: fig-scatter
+#| fig-cap: "Engine displacement versus fuel economy for passenger vehicles"
+#| fig-width: 6.5
+#| fig-height: 3.5
+#| echo: false
 
 plot(
   mtcars$disp, mtcars$mpg,
-  xlab = "Displacement (cu.in.)",
+  xlab = "Engine Displacement (cu.in.)",
   ylab = "Miles Per Gallon (MPG)",
-  pch = 19,
-  col = "steelblue"
+  pch = 19, col = "#2E5B88"
 )
-abline(
-  lm(mpg ~ disp, data = mtcars),
-  col = "firebrick",
-  lwd = 2
-)
+abline(lm(mpg ~ disp, data = mtcars), col = "#B22222", lwd = 2)
 ```
 
-As demonstrated in @fig-mtcars-plot and @sec-intro, vehicles with larger engine displacement yield lower fuel economy.
+As demonstrated in @fig-scatter, there is a clear downward trend: vehicles with larger engine displacement yield lower fuel economy.
 
-## Professional Styling Features
+## Exercises
 
-### Callout Boxes
-
-Technical books use callouts to highlight important reader notes:
-
-\Needspace{6\baselineskip}
-::: {.callout-note}
-## Important Note for Readers
-
-The `mtcars` dataset was extracted from the 1974 *Motor Trend* US magazine, comprising fuel consumption and 10 aspects of automobile design.
-:::
-
-\Needspace{6\baselineskip}
-::: {.callout-warning}
-## Common Pitfall
-
-Never evaluate models without checking for missing values (`NA`) or extreme outliers first!
-:::
-
-### Hiding Code but Showing Results
-
-Publishers often want clean graphs without printing the underlying script in the main text:
-
-```{r}
-#| label: fig-hidden-code
-#| fig-cap: "Fuel Efficiency Distribution (Code Hidden)"
-#| fig-align: "center"
-#| echo: false
-
-hist(
-  mtcars$mpg,
-  col = "cornflowerblue",
-  border = "white",
-  main = "",
-  xlab = "Miles Per Gallon (MPG)"
-)
-```
+1.1 **Sampling methods.** A survey selects 100 students at random from a university directory.
+(a) Identify the target population and the sample.
+(b) Is this an observational study or an experiment?

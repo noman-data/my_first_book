@@ -1,10 +1,10 @@
 project:
   type: book
+  output-dir: _book
 
 book:
-  title: "my_first_book"
-  author: "Norah Jones"
-  date: "10/3/2026"
+  title: "OpenIntro Applied Statistics"
+  author: "Noman"
   chapters:
     - index.qmd
     - intro.qmd
@@ -13,32 +13,23 @@ book:
 
 bibliography: references.bib
 
+execute:
+  echo: false
+  warning: false
+  fig-format: png
+
 format:
-  html:
-    theme:
-      - cosmo
-      - brand
   pdf:
-    documentclass: scrreprt
-    geometry:
-      - paperwidth=6in
-      - paperheight=9in
-      - top=0.75in
-      - bottom=0.75in
-      - inner=1.0in
-      - outer=0.75in
-    colorlinks: true
+    documentclass: scrbook
+    papersize: letter
+    fontsize: 10pt
+    linestretch: 1.15
+    callout-appearance: default
+    callout-icon: true
+    include-in-header: latex/openintro.tex
+    pdf-engine: xelatex
     toc: true
     number-sections: true
-    include-in-header:
-      text: |
-        \usepackage{fvextra}
-        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
-        \usepackage{needspace}
-  
   epub:
-    cover-image: cover.png
-  
-
-editor: visual
-
+    toc: true
+    number-sections: true
